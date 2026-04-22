@@ -28,6 +28,48 @@
       </div>
     </section>
 
+    <section class="difficulty-selector" aria-label="難度選擇">
+      <fieldset class="difficulty-group">
+        <legend>選擇難度</legend>
+        <div class="difficulty-options">
+          <label class="difficulty-label">
+            <input 
+              type="radio" 
+              name="difficulty" 
+              value="easy" 
+              class="difficulty-input"
+              aria-label="簡單難度"
+            >
+            <span class="difficulty-name">簡單</span>
+            <span class="difficulty-desc">45秒</span>
+          </label>
+          <label class="difficulty-label">
+            <input 
+              type="radio" 
+              name="difficulty" 
+              value="medium" 
+              class="difficulty-input"
+              checked
+              aria-label="普通難度"
+            >
+            <span class="difficulty-name">普通</span>
+            <span class="difficulty-desc">30秒</span>
+          </label>
+          <label class="difficulty-label">
+            <input 
+              type="radio" 
+              name="difficulty" 
+              value="hard" 
+              class="difficulty-input"
+              aria-label="困難難度"
+            >
+            <span class="difficulty-name">困難</span>
+            <span class="difficulty-desc">20秒</span>
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
     <section class="controls" aria-label="遊戲控制">
       <button id="start-btn" class="btn btn-primary" type="button">開始遊戲</button>
       <button id="restart-btn" class="btn btn-secondary" type="button" disabled>重新開始</button>

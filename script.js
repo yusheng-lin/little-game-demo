@@ -3,6 +3,27 @@ const GRID_SIZE = 9;
 const MIN_SHOW_MS = 450;
 const MAX_SHOW_MS = 950;
 
+const DIFFICULTY_SETTINGS = {
+  easy: {
+    duration: 45,
+    minShowMs: 600,
+    maxShowMs: 1200,
+    spawnDelayMs: 200,
+  },
+  medium: {
+    duration: 30,
+    minShowMs: 450,
+    maxShowMs: 950,
+    spawnDelayMs: 150,
+  },
+  hard: {
+    duration: 20,
+    minShowMs: 250,
+    maxShowMs: 600,
+    spawnDelayMs: 100,
+  },
+};
+
 const scoreEl = document.getElementById("score");
 const bestScoreEl = document.getElementById("best-score");
 const timeEl = document.getElementById("time");
@@ -10,16 +31,45 @@ const messageEl = document.getElementById("message");
 const gridEl = document.getElementById("grid");
 const startBtn = document.getElementById("start-btn");
 const restartBtn = document.getElementById("restart-btn");
+const difficultyInputs = document.querySelectorAll('.difficulty-input');
+const difficultySelector = document.querySelector('.difficulty-selector');
 
 let score = 0;
-let bestScore = Number(localStorage.getItem("best-score") || "0");
+let bestScore = {
+  easy: Number(localStorage.getItem("best-score-easy") || "0"),
+  medium: Number(localStorage.getItem("best-score-medium") || "0"),
+  hard: Number(localStorage.getItem("best-score-hard") || "0"),
+};
 let timeLeft = GAME_SECONDS;
 let activeIndex = -1;
 let gameRunning = false;
 let roundTimeout = null;
 let timerInterval = null;
+let currentDifficulty = "medium";
 
-bestScoreEl.textContent = String(bestScore);
+function getSelectedDifficulty() {
+  const checked = document.querySelector('.difficulty-input:checked');
+  return checked ? checked.value : "medium";
+}
+
+function getCurrentDifficultySetting() {
+  return DIFFICULTY_SETTINGS[currentDifficulty];
+}
+
+function updateBestScoreDisplay() {
+  bestScoreEl.textContent = String(bestScore[currentDifficulty]);
+}
+
+function updateDifficultyDisplay() {
+  // Update timer display to show duration of selected difficulty
+  const settings = getCurrentDifficultySetting();
+  timeLeft = settings.duration;
+  updateHud();
+}
+
+bestScoreEl.textContent = String(bestScore.medium);
+// Initialize timeLeft with default (medium) difficulty duration
+timeLeft = DIFFICULTY_SETTINGS.medium.duration;
 
 function createGrid() {
   for (let i = 0; i < GRID_SIZE; i += 1) {
@@ -68,15 +118,30 @@ function showNextMole() {
   activeIndex = randomIndex(activeIndex);
   holes[activeIndex].classList.add("up");
 
+  const settings = getCurrentDifficultySetting();
   roundTimeout = window.setTimeout(() => {
     showNextMole();
-  }, randomMs(MIN_SHOW_MS, MAX_SHOW_MS));
+  }, randomMs(settings.minShowMs, settings.maxShowMs));
 }
 
 function updateHud() {
   scoreEl.textContent = String(score);
   timeEl.textContent = String(timeLeft);
-  bestScoreEl.textContent = String(bestScore);
+  updateBestScoreDisplay();
+}
+
+function disableDifficultySelector() {
+  difficultyInputs.forEach(input => {
+    input.disabled = true;
+  });
+  difficultySelector.classList.add('disabled');
+}
+
+function enableDifficultySelector() {
+  difficultyInputs.forEach(input => {
+    input.disabled = false;
+  });
+  difficultySelector.classList.remove('disabled');
 }
 
 function hitMole(index) {
@@ -109,9 +174,9 @@ function stopGame() {
   clearTimeout(roundTimeout);
   clearInterval(timerInterval);
 
-  if (score > bestScore) {
-    bestScore = score;
-    localStorage.setItem("best-score", String(bestScore));
+  if (score > bestScore[currentDifficulty]) {
+    bestScore[currentDifficulty] = score;
+    localStorage.setItem(`best-score-${currentDifficulty}`, String(bestScore[currentDifficulty]));
     messageEl.textContent = `時間到。新紀錄 ${score} 分。`;
   } else {
     messageEl.textContent = `時間到。你的分數是 ${score} 分。`;
@@ -119,17 +184,22 @@ function stopGame() {
 
   startBtn.disabled = false;
   restartBtn.disabled = false;
+  enableDifficultySelector();
   updateHud();
 }
 
 function startGame() {
+  currentDifficulty = getSelectedDifficulty();
+  const settings = getCurrentDifficultySetting();
+  
   score = 0;
-  timeLeft = GAME_SECONDS;
+  timeLeft = settings.duration;
   gameRunning = true;
   messageEl.textContent = "地鼠出現了，快點擊它。";
 
   startBtn.disabled = true;
   restartBtn.disabled = false;
+  disableDifficultySelector();
 
   updateHud();
   showNextMole();
@@ -150,6 +220,15 @@ restartBtn.addEventListener("click", () => {
   clearTimeout(roundTimeout);
   clearInterval(timerInterval);
   startGame();
+});
+
+// Add event listeners for difficulty selection changes
+difficultyInputs.forEach(input => {
+  input.addEventListener("change", (e) => {
+    currentDifficulty = e.target.value;
+    updateBestScoreDisplay();
+    updateDifficultyDisplay();
+  });
 });
 
 createGrid();
