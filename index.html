@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打地鼠小遊戲</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <h1>打地鼠</h1>
+      <p class="subtitle">在時間內盡量打到更多地鼠</p>
+    </header>
+
+    <section class="hud" aria-label="遊戲資訊">
+      <div class="stat-card">
+        <span class="stat-label">分數</span>
+        <strong id="score">0</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">剩餘時間</span>
+        <strong><span id="time">30</span> 秒</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">最高分</span>
+        <strong id="best-score">0</strong>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="遊戲控制">
+      <button id="start-btn" class="btn btn-primary" type="button">開始遊戲</button>
+      <button id="restart-btn" class="btn btn-secondary" type="button" disabled>重新開始</button>
+    </section>
+
+    <section class="arena" aria-label="打地鼠遊戲區">
+      <div id="grid" class="grid" role="grid"></div>
+    </section>
+
+    <p id="message" class="message" aria-live="polite">按下「開始遊戲」後，地鼠會隨機出現。</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
