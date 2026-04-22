@@ -1,7 +1,11 @@
 const GAME_SECONDS = 30;
 const GRID_SIZE = 9;
-const MIN_SHOW_MS = 450;
-const MAX_SHOW_MS = 950;
+
+const DIFFICULTY_SETTINGS = {
+  easy: { min: 800, max: 1500 },
+  medium: { min: 450, max: 950 },
+  hard: { min: 200, max: 600 },
+};
 
 const scoreEl = document.getElementById("score");
 const bestScoreEl = document.getElementById("best-score");
@@ -10,6 +14,7 @@ const messageEl = document.getElementById("message");
 const gridEl = document.getElementById("grid");
 const startBtn = document.getElementById("start-btn");
 const restartBtn = document.getElementById("restart-btn");
+const difficultySelect = document.getElementById("difficulty-select");
 
 let score = 0;
 let bestScore = Number(localStorage.getItem("best-score") || "0");
@@ -18,8 +23,13 @@ let activeIndex = -1;
 let gameRunning = false;
 let roundTimeout = null;
 let timerInterval = null;
+let currentDifficulty = "medium";
 
 bestScoreEl.textContent = String(bestScore);
+
+difficultySelect.addEventListener("change", (e) => {
+  currentDifficulty = e.target.value;
+});
 
 function createGrid() {
   for (let i = 0; i < GRID_SIZE; i += 1) {
@@ -68,9 +78,10 @@ function showNextMole() {
   activeIndex = randomIndex(activeIndex);
   holes[activeIndex].classList.add("up");
 
+  const { min, max } = DIFFICULTY_SETTINGS[currentDifficulty];
   roundTimeout = window.setTimeout(() => {
     showNextMole();
-  }, randomMs(MIN_SHOW_MS, MAX_SHOW_MS));
+  }, randomMs(min, max));
 }
 
 function updateHud() {
@@ -119,6 +130,7 @@ function stopGame() {
 
   startBtn.disabled = false;
   restartBtn.disabled = false;
+  difficultySelect.disabled = false;
   updateHud();
 }
 
@@ -130,6 +142,7 @@ function startGame() {
 
   startBtn.disabled = true;
   restartBtn.disabled = false;
+  difficultySelect.disabled = true;
 
   updateHud();
   showNextMole();

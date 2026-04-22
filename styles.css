@@ -72,9 +72,30 @@ body {
 
 .controls {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 16px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group label {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.btn-select {
+  background: #fff;
+  border: 2px solid rgba(31, 41, 51, 0.15);
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
 }
 
 .btn {
