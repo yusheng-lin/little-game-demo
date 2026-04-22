@@ -61,11 +61,9 @@ function randomIndex(exclude) {
 }
 
 function clearActiveMole() {
-  const holes = gridEl.children;
   if (activeIndex >= 0) {
-    holes[activeIndex].classList.remove("up");
+    gridEl.children[activeIndex].classList.remove("up");
   }
-  activeIndex = -1;
 }
 
 function showNextMole() {
@@ -91,11 +89,14 @@ function updateHud() {
 }
 
 function hitMole(index) {
-  if (!gameRunning || index !== activeIndex) {
+  const hole = gridEl.children[index];
+  if (!gameRunning || !hole.classList.contains("up")) {
     return;
   }
 
-  const hole = gridEl.children[index];
+  // Immediately remove "up" to prevent double hits and race conditions
+  hole.classList.remove("up");
+  
   hole.classList.add("hit");
   window.setTimeout(() => {
     hole.classList.remove("hit");
@@ -110,7 +111,6 @@ function hitMole(index) {
   }, 620);
 
   score += 1;
-  clearActiveMole();
   updateHud();
 }
 
