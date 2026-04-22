@@ -171,7 +171,32 @@ body {
 }
 
 .hole.hit .mole {
-  animation: bonk 260ms ease;
+  animation: bonk 300ms ease forwards;
+}
+
+.hole.hit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: inherit;
+  animation: flash-overlay 300ms ease forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.score-pop {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  translate: -50% 0;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 20;
+  animation: score-rise 600ms ease forwards;
 }
 
 .message {
@@ -184,13 +209,44 @@ body {
 @keyframes bonk {
   0% {
     transform: translate(-50%, 0) scale(1);
+    filter: brightness(1);
+  }
+  20% {
+    filter: brightness(2.5);
   }
   50% {
     transform: translate(-50%, -10px) scale(0.9);
+    filter: brightness(1);
   }
   100% {
     transform: translate(-50%, 40px) scale(0.6);
     opacity: 0.2;
+  }
+}
+
+@keyframes flash-overlay {
+  0% {
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes score-rise {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -60px) scale(1.2);
   }
 }
 

@@ -88,7 +88,15 @@ function hitMole(index) {
   hole.classList.add("hit");
   window.setTimeout(() => {
     hole.classList.remove("hit");
-  }, 230);
+  }, 310);
+
+  const pop = document.createElement("span");
+  pop.className = "score-pop";
+  pop.textContent = "+1";
+  hole.appendChild(pop);
+  window.setTimeout(() => {
+    pop.remove();
+  }, 620);
 
   score += 1;
   clearActiveMole();
