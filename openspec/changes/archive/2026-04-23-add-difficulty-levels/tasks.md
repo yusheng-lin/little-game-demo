@@ -21,4 +21,4 @@
 
 - [x] 4.1 Merge finalized requirements into `openspec/specs/difficulty-levels/spec.md`
 - [x] 4.2 Confirm no remaining baseline-relative delta exists for this change
-- [ ] 4.3 Archive the change
+- [x] 4.3 Archive the change

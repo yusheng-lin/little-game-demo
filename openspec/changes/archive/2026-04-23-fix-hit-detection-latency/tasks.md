@@ -14,4 +14,4 @@
 
 - [x] 3.1 Merge finalized requirements into `openspec/specs/mole-arena/spec.md`
 - [x] 3.2 Confirm no remaining baseline-relative delta exists for this change
-- [ ] 3.3 Archive the change
+- [x] 3.3 Archive the change
