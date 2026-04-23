@@ -9,3 +9,9 @@
 - [x] 2.1 Verify that clicking a mole increments the score
 - [x] 2.2 Verify that clicking the same mole twice rapidly only increments the score once
 - [x] 2.3 Verify that clicking an empty hole does nothing
+
+## 3. Archive Readiness
+
+- [x] 3.1 Merge finalized requirements into `openspec/specs/mole-arena/spec.md`
+- [x] 3.2 Confirm no remaining baseline-relative delta exists for this change
+- [ ] 3.3 Archive the change

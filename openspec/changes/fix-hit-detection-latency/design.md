@@ -1,6 +1,10 @@
+## Status
+
+This design has been realized in the codebase and its normative behavior is now captured in `openspec/specs/mole-arena/spec.md`.
+
 ## Context
 
-The current `hitMole(index)` logic checks `if (index !== activeIndex)`. The `activeIndex` is updated by `showNextMole` via `clearActiveMole()`, which sets `activeIndex = -1`. This creates a race condition on slow devices where the click event might fire after `activeIndex` has been reset, even if the mole is still visually "up" or the user's intent was to hit it.
+The earlier `hitMole(index)` logic relied on `activeIndex`, which could be reset before a delayed click event was processed. That created a race condition where visible, intended hits were ignored.
 
 ## Goals / Non-Goals
 
@@ -30,3 +34,7 @@ We will keep `activeIndex` only to ensure the *next* mole doesn't appear in the 
 
 - **[Risk] Multiple hits during animation** → If not handled, a fast user could hit the same mole twice.
   - *Mitigation*: The `hitMole` function will immediately remove `up` so subsequent calls for the same hole will fail the `contains('up')` check.
+
+## Archive Note
+
+No open design delta remains after the baseline merge. Keep this document as implementation history until the change is archived.

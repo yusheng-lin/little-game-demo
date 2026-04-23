@@ -16,3 +16,9 @@
 - [x] 3.1 Verify "Easy" mode is noticeably slower and "Hard" mode is significantly faster
 - [x] 3.2 Ensure difficulty cannot be changed while the game is running
 - [x] 3.3 Remove old timing constants (`MIN_SHOW_MS`, `MAX_SHOW_MS`)
+
+## 4. Archive Readiness
+
+- [x] 4.1 Merge finalized requirements into `openspec/specs/difficulty-levels/spec.md`
+- [x] 4.2 Confirm no remaining baseline-relative delta exists for this change
+- [ ] 4.3 Archive the change

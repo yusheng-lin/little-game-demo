@@ -1,21 +1,27 @@
+## Status
+
+This change has been implemented and its resulting behavior is now represented in the baseline capability spec at `openspec/specs/mole-arena/spec.md`.
+
 ## Why
 
-On slower devices, there is a race condition between the user clicking a mole and the `showNextMole` function clearing the `activeIndex`. If the timer expires and `showNextMole` runs just as the user clicks, `activeIndex` is set to -1 before `hitMole` is called, causing the hit to be ignored.
+On slower devices, there was a race condition between the user clicking a mole and the timer advancing to the next appearance. That timing gap could cause valid hits to be ignored.
 
 ## What Changes
 
-- **State-based Hit Detection**: Instead of relying on a single `activeIndex`, check if the clicked hole currently has the `up` class.
-- **Improved Responsiveness**: Ensure hit registration is prioritized even if a frame skip or delay occurs in the timer logic.
-- **Race Condition Fix**: Decouple the "active" state of a mole from a single global index to allow for slight overlaps in event processing.
+- **State-based Hit Detection**: Switched hit validation to the clicked hole's `up` state.
+- **Improved Responsiveness**: Ensured valid hits still register under slower event processing.
+- **Race Condition Fix**: Decoupled hit validation from a single global index.
+- **Baseline Merge**: Folded the resulting requirements into the formal baseline spec.
 
 ## Capabilities
 
-### New Capabilities
-- `robust-hit-detection`: Implements hole-specific state checking for hits instead of relying on a global index.
-
 ### Modified Capabilities
-- None.
+- `mole-arena`: The baseline now captures state-based hit scoring and single-score behavior in `openspec/specs/mole-arena/spec.md`.
+
+### Remaining Delta
+- None. This change is ready to archive.
 
 ## Impact
 
-- `script.js`: Update `hitMole` to check the DOM element state and prevent double-scoring. Update `clearActiveMole` to be more focused.
+- `script.js`: Updated hit validation to use per-hole state and prevent double-scoring.
+- `openspec/specs/mole-arena/spec.md`: Captures the merged baseline behavior.

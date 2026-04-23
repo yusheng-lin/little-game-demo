@@ -1,24 +1,29 @@
+## Status
+
+This change has been implemented and its requirements are now represented in the baseline capability spec at `openspec/specs/difficulty-levels/spec.md`.
+
 ## Why
 
-The current game has a fixed difficulty level, which may be too fast for new players or too slow for experienced ones. Adding difficulty levels (Easy, Medium, Hard) improves the game's accessibility, player engagement, and replayability by allowing users to choose a challenge that matches their skill level.
+The game originally had a fixed difficulty level, which was too rigid for different player skill levels. This change introduced selectable difficulty levels to improve accessibility, engagement, and replayability.
 
 ## What Changes
 
-- **Difficulty Selection UI**: Add a selector (dropdown or radio group) in the control area to allow players to choose between Easy, Medium, and Hard before starting a game.
-- **Dynamic Speed Constants**: Refactor the mole appearance timing logic to use variables derived from the selected difficulty level instead of global constants.
-- **Game State Integration**: Ensure difficulty cannot be changed while a game is in progress.
-- **Persistent Preference**: (Optional) Save the last selected difficulty to local storage.
+- **Difficulty Selection UI**: Added a selector in the control area for Easy, Medium, and Hard.
+- **Dynamic Speed Constants**: Refactored mole appearance timing to use values derived from the selected difficulty.
+- **Game State Integration**: Locked difficulty changes during active play.
+- **Baseline Merge**: Folded the resulting requirements into the formal baseline spec.
 
 ## Capabilities
 
-### New Capabilities
-- `difficulty-levels`: Handles the UI selection, state management, and logic for adjusting game speed parameters (min/max show duration) based on player choice.
-
 ### Modified Capabilities
-- None. (The project currently has no existing formal specifications).
+- `difficulty-levels`: This capability now exists in the baseline at `openspec/specs/difficulty-levels/spec.md`.
+
+### Remaining Delta
+- None. This change is ready to archive.
 
 ## Impact
 
-- `index.html`: New UI elements for difficulty selection.
-- `script.js`: Update `showNextMole` logic and `startGame` to respect the selected difficulty. Refactor hardcoded timing constants.
-- `styles.css`: Styling for the new difficulty selection components.
+- `index.html`: Added UI elements for difficulty selection.
+- `script.js`: Updated `showNextMole` and session state handling to respect the selected difficulty.
+- `styles.css`: Added styling for the difficulty selection controls.
+- `openspec/specs/difficulty-levels/spec.md`: Captures the merged baseline behavior.

@@ -1,6 +1,10 @@
+## Status
+
+This design has been realized in the codebase and its normative behavior is now captured in `openspec/specs/difficulty-levels/spec.md`.
+
 ## Context
 
-The game currently uses hardcoded constants for mole appearance duration: `MIN_SHOW_MS (450)` and `MAX_SHOW_MS (950)`. These are set globally and cannot be changed by the user. The UI lacks any mechanism for user configuration.
+The game originally used a single timing profile for mole appearance duration and did not expose any player-facing difficulty controls.
 
 ## Goals / Non-Goals
 
@@ -40,3 +44,7 @@ Use an HTML `<select>` element labeled "Difficulty".
   - *Mitigation*: Read the difficulty setting explicitly at the start of `startGame()` and lock the UI immediately.
 - **[Risk] UI Clutter** → Adding more controls might make the small mobile view cramped.
   - *Mitigation*: Ensure the selector is styled to fit neatly within the existing `.controls` flex container.
+
+## Archive Note
+
+No open design delta remains after the baseline merge. Keep this document as implementation history until the change is archived.
